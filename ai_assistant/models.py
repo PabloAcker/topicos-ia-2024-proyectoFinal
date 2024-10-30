@@ -1,38 +1,31 @@
 from pydantic import BaseModel, Field
+from datetime import datetime
 from enum import Enum
-from datetime import date, datetime
+class ContractType(str, Enum):
+    compra_venta = "COMPRAVENTA"
+    arrendamiento = "ARRENDAMIENTO"
+    trabajo = "TRABAJO"
+    servicios = "SERVICIOS"
+    sociedad = "SOCIEDAD"
+    prestamo = "PRESTAMO"
+    comodato = "COMODATO"
+    donacion = "DONACION"
+    mandato = "MANDATO"
+    confidencialidad = "CONFIDENCIALIDAD"
 
+class ContractRequest(BaseModel):
+    contract_type: ContractType
+    parties: dict  # Información sobre las partes involucradas
+    terms: dict    # Términos específicos del contrato
 
-class TripType(str, Enum):
-    flight = "FLIGHT"
-    bus = "BUS"
-
-
-class TripReservation(BaseModel):
-    trip_type: TripType
-    date: date
-    departure: str
-    destination: str
-    cost: int
-
-
-class HotelReservation(BaseModel):
-    checkin_date: date
-    checkout_date: date
-    hotel_name: str
-    city: str
-    cost: int
-
-
-class RestaurantReservation(BaseModel):
-    reservation_time: datetime
-    restaurant: str
-    city: str
-    dish: str
-    cost: int
-
-
-class AgentAPIResponse(BaseModel):
+class ContractResponse(BaseModel):
     status: str
-    agent_response: str
+    content: str
+
+class LegalQuestion(BaseModel):
+    question: str
+
+class LegalAnswer(BaseModel):
+    status: str
+    answer: str
     timestamp: datetime = Field(default_factory=datetime.now)

@@ -1,41 +1,14 @@
 import os
-import json
-from datetime import date, datetime
-from ai_assistant.models import (
-    RestaurantReservation,
-    TripReservation,
-    HotelReservation,
-    TripType,
-)
+from datetime import datetime
 from ai_assistant.config import get_agent_settings
 
 SETTINGS = get_agent_settings()
 
-
-def custom_serializer(obj):
-    if isinstance(obj, (date, datetime)):
-        return obj.isoformat()  # Convert date and datetime to ISO 8601 string
-    raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
-
-
-def save_reservation(
-    reservation: RestaurantReservation | TripReservation | HotelReservation,
-):
-    reservation_dict = reservation.model_dump()
-    print(f"saving reservation: {reservation_dict}")
-    reservations = []
-    if os.path.exists(SETTINGS.log_file) and os.path.getsize(SETTINGS.log_file) > 0:
-        with open(SETTINGS.log_file, "r") as file:
-            try:
-                reservations = json.load(file)
-            except json.JSONDecodeError:
-                reservation = []
-    else:
-        reservations = []
-    reservation_dict["reservation_type"] = reservation.__class__.__name__
-    reservations.append(reservation_dict)
-
-    with open(SETTINGS.log_file, "w") as file:
-        json.dump(reservations, file, indent=4, default=custom_serializer)
-
-    print(f"saved reservation!")
+def save_contract(content: str, contract_type: str, improved: bool = False):
+    folder = SETTINGS.contract_storage_path
+    os.makedirs(folder, exist_ok=True)
+    filename = f"{contract_type}_{'improved' if improved else 'generated'}_{datetime.now().isoformat()}.txt"
+    path = os.path.join(folder, filename)
+    with open(path, "w") as file:
+        file.write(content)
+    print(f"Contrato guardado en {path}")
