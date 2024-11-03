@@ -10,4 +10,3 @@ def agent_response(message):
 if __name__ == "__main__":
     demo = gr.ChatInterface(agent_response, type="messages")
     demo.launch()
-
