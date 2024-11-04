@@ -20,5 +20,8 @@ def legal_question_endpoint(question: LegalQuestion):
     return answer_legal_question(question.question)
 
 @app.post("/rate_contract", response_model=LegalAnswer)
-def rate_contract_endpoint(contract_content: str):
-    return rate_contract(contract_content)
+async def rate_contract_endpoint(file: UploadFile = File(None), contract_content: Union[str, None] = None):
+    content = await file.read() if file else contract_content
+    if content is None:
+        return {"status": "Error", "answer": "No se proporcionó ningún contenido para calificar."}
+    return rate_contract(content)
