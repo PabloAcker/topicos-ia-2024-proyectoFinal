@@ -4,6 +4,7 @@ from ai_assistant.tools import (
     generate_contract_tool,
     improve_contract_tool,
     answer_legal_question_tool,
+    rate_contract_tool,
 )
 from ai_assistant.prompts import agent_prompt_tpl
 
@@ -14,6 +15,7 @@ class LegalAgent:
                 generate_contract_tool,
                 improve_contract_tool,
                 answer_legal_question_tool,
+                rate_contract_tool,
             ],
             verbose=True,
         )
