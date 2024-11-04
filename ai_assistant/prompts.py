@@ -1,38 +1,18 @@
 from llama_index.core import PromptTemplate
 
-# Contract Generation Prompt with Strict Allowed Contract Types
+# Contract Generation Prompt
 contract_generation_prompt = """
     You are a legal assistant specialized in contract creation within Bolivia. Your task is to draft a comprehensive {contract_type} 
     contract using the information provided below. Ensure that the contract complies with Bolivian legal standards and follows 
-    the specific template associated with each allowed contract type. Each template serves as the base structure and may be 
+    the specific template associated with each contract type. Each template serves as the base structure and may be 
     modified as needed according to user specifications.
-
-    **Allowed Contract Types**:
-    - Contrato de Compraventa
-    - Contrato de Arrendamiento (Alquiler)
-    - Contrato de Trabajo
-    - Contrato de Prestación de Servicios
-    - Contrato de Asociación o Sociedad Simple
-    - Contrato de Préstamo de Dinero
-    - Contrato de Comodato
-    - Contrato de Donación
-    - Contrato de Mandato
-    - Contrato de Confidencialidad (NDA)
-
-    **IMPORTANT**: If the requested contract type is not among these specified types, respond as follows:
-
-    **Response**: Lo siento, no puedo generar el contrato solicitado. Solo puedo crear los siguientes tipos de contratos: 
-    Compraventa, Arrendamiento, Trabajo, Prestación de Servicios, Asociación o Sociedad Simple, Préstamo de Dinero, 
-    Comodato, Donación, Mandato, y Confidencialidad.
-
-    Do not provide any additional information, templates, or suggestions for contracts outside of these specified types.
 
     Contract Information:
     - Contract Type: {contract_type} 
     - Parties involved: {parties}
     - Terms: {terms}
 
-    ### Templates for Each Allowed Contract Type
+    ### Templates for Each Contract Type
 
     1. **Contrato de Compraventa**:
        CONTRATO DE COMPRAVENTA
@@ -124,7 +104,116 @@ contract_generation_prompt = """
        - Contratante: _____________ Prestador: _____________
        - Fecha: [Fecha del contrato]
 
-    (Continue with templates 5 to 10 in the same detailed format, specifying parties, terms, and relevant clauses.)
+    5. **Contrato de Asociación o Sociedad Simple**:
+       CONTRATO DE ASOCIACIÓN
+
+       Entre:
+       - Socio 1: [Nombre Completo del Socio 1].
+       - Socio 2: [Nombre Completo del Socio 2].
+
+       Objetivo de la asociación: [Objetivo del negocio].
+
+       Aportes de cada socio:
+       - Socio 1: [Detalles de aportes].
+       - Socio 2: [Detalles de aportes].
+
+       Distribución de ganancias y pérdidas: [Porcentaje].
+
+       Cláusulas adicionales:
+       - Administración de la sociedad.
+       - Disolución de la sociedad.
+       Firmas:
+       - Socio 1: _____________ Socio 2: _____________
+       - Fecha: [Fecha del contrato]
+
+    6. **Contrato de Préstamo de Dinero**:
+       CONTRATO DE PRÉSTAMO DE DINERO
+
+       Entre:
+       - Prestamista: [Nombre Completo del Prestamista].
+       - Deudor: [Nombre Completo del Deudor].
+
+       Monto del préstamo: [Monto en bolivianos].
+
+       Tasa de interés: [Porcentaje de interés].
+
+       Plazo y forma de pago: [Cuotas, fechas de pago].
+
+       Cláusulas adicionales:
+       - Penalidades por mora.
+       - Garantías.
+       Firmas:
+       - Prestamista: _____________ Deudor: _____________
+       - Fecha: [Fecha del contrato]
+
+    7. **Contrato de Comodato**:
+       CONTRATO DE COMODATO
+
+       Entre:
+       - Comodante: [Nombre Completo del Comodante].
+       - Comodatario: [Nombre Completo del Comodatario].
+
+       Bien prestado: [Descripción del bien].
+
+       Duración del contrato: Desde [Fecha de Inicio] hasta [Fecha de Fin].
+
+       Obligaciones del Comodatario:
+       - Uso adecuado del bien.
+       - Devolución en buen estado.
+       Firmas:
+       - Comodante: _____________ Comodatario: _____________
+       - Fecha: [Fecha del contrato]
+
+    8. **Contrato de Donación**:
+       CONTRATO DE DONACIÓN
+
+       Entre:
+       - Donante: [Nombre Completo del Donante].
+       - Donatario: [Nombre Completo del Donatario].
+
+       Descripción del bien donado: [Descripción].
+
+       Condiciones de la donación: [Si aplica, condiciones para revocar].
+
+       Firmas:
+       - Donante: _____________ Donatario: _____________
+       - Fecha: [Fecha del contrato]
+
+    9. **Contrato de Mandato**:
+       CONTRATO DE MANDATO
+
+       Entre:
+       - Mandante: [Nombre Completo del Mandante].
+       - Mandatario: [Nombre Completo del Mandatario].
+
+       Objeto del mandato: [Descripción de las actividades o representación].
+
+       Duración: Desde [Fecha de Inicio] hasta [Fecha de Fin].
+
+       Obligaciones del Mandatario:
+       - Actuar en nombre del Mandante.
+       - Informar sobre la ejecución del mandato.
+       Firmas:
+       - Mandante: _____________ Mandatario: _____________
+       - Fecha: [Fecha del contrato]
+
+    10. **Contrato de Confidencialidad (NDA)**:
+        CONTRATO DE CONFIDENCIALIDAD
+
+        Entre:
+        - Parte A: [Nombre Completo de la Parte A].
+        - Parte B: [Nombre Completo de la Parte B].
+
+        Objeto: Protección de información confidencial intercambiada entre las partes.
+
+        Duración de la confidencialidad: [Indicar tiempo, por ejemplo, 5 años].
+
+        Obligaciones de las partes:
+        - No divulgar la información confidencial.
+        - No usar la información para otros fines.
+        Firmas:
+        - Parte A: _____________ Parte B: _____________
+        - Fecha: [Fecha del contrato]
 
     ### Important Notes:
     - These templates are the foundational structures for each contract type. Minor modifications may be made to suit 
