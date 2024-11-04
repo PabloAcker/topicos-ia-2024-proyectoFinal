@@ -114,6 +114,7 @@ contract_generation_prompt = """
       with Bolivian legal standards.
 """
 
+
 # Contract Improvement Prompt
 contract_improvement_prompt = """
     You have been provided with a {contract_type} contract. Your task is to review, enhance, and optimize the clauses, 
