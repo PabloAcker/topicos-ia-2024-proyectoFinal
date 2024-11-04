@@ -1,19 +1,38 @@
 from llama_index.core import PromptTemplate
 
-# Contract Generation Prompt
+# Contract Generation Prompt with Strict Allowed Contract Types
 contract_generation_prompt = """
     You are a legal assistant specialized in contract creation within Bolivia. Your task is to draft a comprehensive {contract_type} 
-    contract using the information provided below. Follow the specific template associated with each contract type to ensure 
-    compliance with Bolivian legal standards. Each template serves as the base structure and may be modified as needed 
-    according to user specifications.
+    contract using the information provided below. Ensure that the contract complies with Bolivian legal standards and follows 
+    the specific template associated with each allowed contract type. Each template serves as the base structure and may be 
+    modified as needed according to user specifications.
+
+    **Allowed Contract Types**:
+    - Contrato de Compraventa
+    - Contrato de Arrendamiento (Alquiler)
+    - Contrato de Trabajo
+    - Contrato de Prestación de Servicios
+    - Contrato de Asociación o Sociedad Simple
+    - Contrato de Préstamo de Dinero
+    - Contrato de Comodato
+    - Contrato de Donación
+    - Contrato de Mandato
+    - Contrato de Confidencialidad (NDA)
+
+    **IMPORTANT**: If the requested contract type is not among these specified types, respond as follows:
+
+    **Response**: Lo siento, no puedo generar el contrato solicitado. Solo puedo crear los siguientes tipos de contratos: 
+    Compraventa, Arrendamiento, Trabajo, Prestación de Servicios, Asociación o Sociedad Simple, Préstamo de Dinero, 
+    Comodato, Donación, Mandato, y Confidencialidad.
+
+    Do not provide any additional information, templates, or suggestions for contracts outside of these specified types.
 
     Contract Information:
-    - Contract Type: {contract_type} (only the following types are permitted: Compraventa, Arrendamiento, Trabajo, 
-      Prestación de Servicios, Asociación o Sociedad Simple, Préstamo de Dinero, Comodato, Donación, Mandato, Confidencialidad)
+    - Contract Type: {contract_type} 
     - Parties involved: {parties}
     - Terms: {terms}
 
-    ### Templates for Each Contract Type
+    ### Templates for Each Allowed Contract Type
 
     1. **Contrato de Compraventa**:
        CONTRATO DE COMPRAVENTA
@@ -113,7 +132,6 @@ contract_generation_prompt = """
     - Ensure that each contract is fully written in Spanish, that all clauses are clear, and that the contract complies 
       with Bolivian legal standards.
 """
-
 
 # Contract Improvement Prompt
 contract_improvement_prompt = """
