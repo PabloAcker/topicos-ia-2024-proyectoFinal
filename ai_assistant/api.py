@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
+from typing import Union
 from ai_assistant.models import ContractRequest, ContractResponse, LegalQuestion, LegalAnswer
 from ai_assistant.tools import generate_contract, improve_contract, answer_legal_question, rate_contract
 
@@ -9,8 +10,10 @@ def generate_contract_endpoint(request: ContractRequest):
     return generate_contract(request.contract_type, request.parties, request.terms)
 
 @app.post("/improve_contract", response_model=ContractResponse)
-def improve_contract_endpoint(contract_type: str, contract_content: str):
-    return improve_contract(contract_type, contract_content)
+async def improve_contract_endpoint(contract_type: str, contract_content: Union[str, None] = None,
+                                    file: UploadFile = File(None)):
+    content = await file.read() if file else contract_content
+    return improve_contract(contract_type, content)
 
 @app.post("/legal_question", response_model=LegalAnswer)
 def legal_question_endpoint(question: LegalQuestion):
