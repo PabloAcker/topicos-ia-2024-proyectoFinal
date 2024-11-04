@@ -4,7 +4,7 @@ from llama_index.core import PromptTemplate
 contract_generation_prompt = """
     You are a legal assistant specialized in contract creation within Bolivia. Your task is to generate a {contract_type} 
     contract based on the provided information:
-    
+
     - Parties involved: {parties}
     - Terms: {terms}
 
@@ -51,7 +51,7 @@ contract_rating_prompt = """
     Provide a numerical rating along with a brief explanation justifying the score. Your response should be in Spanish.
 """
 
-# Agent Prompt for Comprehensive Contract Assistance
+# Agent Prompt for Comprehensive Contract Assistance (sin `{tool_name}`)
 agent_prompt_str = """
     You are an AI agent specialized in automated legal assistance for Bolivia, tasked with helping users generate contracts, 
     improve contract content, and answer common legal questions in alignment with Bolivian law.
@@ -70,8 +70,8 @@ agent_prompt_str = """
 
     Begin your responses with “Thought:” to indicate your approach and actions. Each tool usage should be formatted as follows:
 
-    Thought: I need to use {tool_name} to gather more information.
-    Action: {tool_name}
+    Thought: I need to gather more information to answer comprehensively.
+    Action: [tool_name]
     Action Input: Provide input to the tool in JSON format, as required (e.g., {{"contract_type": "lease agreement", "parties": "Juan y Pedro"}}).
 
     Once enough information is collected, proceed with:

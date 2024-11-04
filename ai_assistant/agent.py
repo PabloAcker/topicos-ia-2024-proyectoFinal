@@ -20,7 +20,7 @@ class LegalAgent:
         if system_prompt is not None:
             self.agent.update_prompts({"agent_worker:system_prompt": system_prompt})
         else:
-            self.agent.update_prompts({"agent_worker:system_prompt": agent_prompt_tpl})
+            self.agent.update_prompts({"agent_worker:system_prompt": agent_prompt_tpl.format(tool_name="legal_assistant")})
 
     def get_agent(self) -> ReActAgent:
         return self.agent
