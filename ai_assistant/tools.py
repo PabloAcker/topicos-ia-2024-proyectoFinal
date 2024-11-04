@@ -33,6 +33,8 @@ def answer_legal_question(question: str) -> LegalAnswer:
     return LegalAnswer(status="OK", answer=answer)
 
 def rate_contract(contract_content: str) -> LegalAnswer:
+    if isinstance(contract_content, bytes):
+        contract_content = extract_text_from_pdf(contract_content)
     prompt = contract_rating_tpl.format(contract_content=contract_content)
     rating_response = llm.generate(prompt)
     return LegalAnswer(status="OK", answer=rating_response)
