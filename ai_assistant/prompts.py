@@ -3,59 +3,115 @@ from llama_index.core import PromptTemplate
 # Contract Generation Prompt
 contract_generation_prompt = """
     You are a legal assistant specialized in contract creation within Bolivia. Your task is to draft a comprehensive {contract_type} 
-    contract using the information provided below. Ensure the contract is legally sound, follows Bolivian legal standards, 
-    and includes all necessary clauses to protect the interests of both parties. 
+    contract using the information provided below. Follow the specific template associated with each contract type to ensure 
+    compliance with Bolivian legal standards. Each template serves as the base structure and may be modified as needed 
+    according to user specifications.
 
     Contract Information:
+    - Contract Type: {contract_type} (only the following types are permitted: Compraventa, Arrendamiento, Trabajo, 
+      Prestación de Servicios, Asociación o Sociedad Simple, Préstamo de Dinero, Comodato, Donación, Mandato, Confidencialidad)
     - Parties involved: {parties}
     - Terms: {terms}
-    
-    ### Mandatory Clauses and Structure:
-    1. **Introduction**: Include a formal preamble stating the names, legal identification, and addresses of each party, 
-       specifying their roles (e.g., "El Arrendador" y "El Arrendatario").
-    
-    2. **Definitions**: Clearly define key terms specific to the contract type, such as "Propiedad" for lease agreements or 
-       "Servicios" for service agreements. Include definitions for terms like "Fecha de Inicio," "Duración," and any technical 
-       terms that may be unique to the contract.
 
-    3. **Purpose of Contract**: Provide a clear description of the contract's purpose and the obligations of each party 
-       regarding this purpose, ensuring that it aligns with the terms and objectives set forth.
+    ### Templates for Each Contract Type
 
-    4. **Obligations of Each Party**: Outline specific responsibilities, including details about timelines, quality standards, 
-       and milestones. For example:
-       - Lease Agreements: Specify property maintenance, payment schedule, and permitted usage.
-       - Service Contracts: Define deliverables, expected standards, and deadlines.
+    1. **Contrato de Compraventa**:
+       CONTRATO DE COMPRAVENTA
 
-    5. **Compensation and Payment Terms**: State the payment structure, amount, due dates, and accepted methods of payment. 
-       For contracts involving variable compensation (e.g., service contracts based on performance), include clauses 
-       explaining the calculation.
+       Entre:
+       - Vendedor: [Nombre Completo del Vendedor], con CI [Número de CI] y domicilio en [Dirección del Vendedor].
+       - Comprador: [Nombre Completo del Comprador], con CI [Número de CI] y domicilio en [Dirección del Comprador].
 
-    6. **Confidentiality and Data Protection (if applicable)**: Add a clause requiring both parties to maintain confidentiality 
-       of sensitive information, particularly if the contract involves personal data or proprietary information.
+       Objeto del contrato: El Vendedor vende al Comprador el bien descrito a continuación:
+       - Descripción del Bien: [Descripción detallada del bien, incluyendo características y estado].
 
-    7. **Liability and Indemnification**: Clearly explain the liability each party assumes and any indemnification provisions, 
-       tailored to the context of Bolivian law.
+       Precio y forma de pago:
+       - Monto: [Monto en bolivianos o dólares]
+       - Forma de Pago: [Efectivo, transferencia bancaria, etc.]
 
-    8. **Termination and Cancellation**: Include conditions under which the contract may be terminated, specifying notice 
-       periods, penalties, and any fees associated with early termination.
+       Cláusulas adicionales:
+       - Entrega del bien y aceptación.
+       - Garantías.
+       - Jurisdicción.
+       Firmas:
+       - Vendedor: _____________ Comprador: _____________
+       - Fecha: [Fecha del contrato]
 
-    9. **Dispute Resolution**: Specify a mechanism for resolving disputes, such as mediation or arbitration, and confirm 
-       that Bolivian jurisdiction will apply.
+    2. **Contrato de Arrendamiento (Alquiler)**:
+       CONTRATO DE ARRENDAMIENTO
 
-    10. **Miscellaneous Clauses**: Address standard clauses such as "Entire Agreement," "Severability," and "Amendments," 
-        clarifying how and when modifications to the contract are permissible.
+       Entre:
+       - Arrendador: [Nombre Completo del Arrendador], con CI [Número de CI].
+       - Arrendatario: [Nombre Completo del Arrendatario], con CI [Número de CI].
 
-    ### Special Scenarios:
-    - **Multiple Parties**: If more than two parties are involved, ensure each party's role, responsibilities, and compensation 
-      are clearly outlined and avoid ambiguous language that could create conflicts.
-    - **Time-Sensitive Terms**: If the contract includes time-sensitive obligations, specify exact dates, durations, and 
-      penalties for non-compliance.
-    - **Conditional Terms**: If terms depend on certain conditions (e.g., contingent payment upon task completion), clarify 
-      these conditions and their implications.
+       Bien arrendado: Propiedad ubicada en [Dirección de la Propiedad].
 
-    ### Final Output:
-    Provide the contract fully in Spanish, ensuring that all clauses are clearly worded, legally enforceable, and aligned with 
-    Bolivian contract law standards.
+       Duración: Desde [Fecha de Inicio] hasta [Fecha de Fin].
+
+       Canon de arrendamiento:
+       - Monto: [Monto en bolivianos]
+       - Forma de pago: [Mensual, trimestral, etc.]
+
+       Cláusulas adicionales:
+       - Obligaciones de las partes.
+       - Condiciones de renovación o rescisión.
+       Firmas:
+       - Arrendador: _____________ Arrendatario: _____________
+       - Fecha: [Fecha del contrato]
+
+    3. **Contrato de Trabajo**:
+       CONTRATO DE TRABAJO
+
+       Entre:
+       - Empleador: [Nombre Completo del Empleador/Empresa].
+       - Trabajador: [Nombre Completo del Trabajador], con CI [Número de CI].
+
+       Puesto de trabajo: [Descripción del cargo o puesto].
+
+       Remuneración:
+       - Monto: [Monto en bolivianos]
+       - Fecha de Pago: [Mensual, quincenal, etc.]
+
+       Jornada Laboral: [Horario y días laborales].
+
+       Cláusulas adicionales:
+       - Obligaciones del Trabajador.
+       - Beneficios sociales y descansos.
+       - Causales de despido.
+       Firmas:
+       - Empleador: _____________ Trabajador: _____________
+       - Fecha: [Fecha del contrato]
+
+    4. **Contrato de Prestación de Servicios**:
+       CONTRATO DE PRESTACIÓN DE SERVICIOS
+
+       Entre:
+       - Contratante: [Nombre Completo del Contratante].
+       - Prestador de Servicios: [Nombre Completo del Prestador], con CI [Número de CI].
+
+       Descripción del Servicio: [Detalles del servicio a prestar].
+
+       Honorarios:
+       - Monto: [Monto en bolivianos]
+       - Forma de pago: [Por servicio, mensual, etc.]
+
+       Duración del contrato: Desde [Fecha de Inicio] hasta [Fecha de Fin].
+
+       Cláusulas adicionales:
+       - Responsabilidad del Prestador.
+       - Confidencialidad.
+       - Condiciones de terminación.
+       Firmas:
+       - Contratante: _____________ Prestador: _____________
+       - Fecha: [Fecha del contrato]
+
+    (Continue with templates 5 to 10 in the same detailed format, specifying parties, terms, and relevant clauses.)
+
+    ### Important Notes:
+    - These templates are the foundational structures for each contract type. Minor modifications may be made to suit 
+      specific user requirements, but all essential clauses should remain intact for legal soundness.
+    - Ensure that each contract is fully written in Spanish, that all clauses are clear, and that the contract complies 
+      with Bolivian legal standards.
 """
 
 # Contract Improvement Prompt
