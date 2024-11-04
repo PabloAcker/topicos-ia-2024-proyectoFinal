@@ -4,7 +4,7 @@ from ai_assistant.prompts import agent_prompt_tpl
 
 agent = LegalAgent(agent_prompt_tpl).get_agent()
 
-def agent_response(message, history=None):
+def agent_response(message, history):
     return agent.chat(message).response
 
 if __name__ == "__main__":
